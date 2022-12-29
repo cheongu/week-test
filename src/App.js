@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
+function User(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="square">{props.user.title}</div>
     </div>
   );
 }
+
+const App = () => {
+  const [users, setUsers] = useState([{ id: 0, title: "테스트입니다." }]);
+  const [title, setTitle] = useState("");
+  const addUserHandler = () => {
+    const newUser = {
+      id: users.length + 1,
+      title: title,
+    };
+
+    setUsers([...users, newUser]);
+  };
+  return (
+    <div className="style">
+      <div className="input">
+        <input value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button onClick={addUserHandler}>추가하기</button>
+      </div>
+
+      <div className="container">
+        <h1>Todo List</h1>
+      </div>
+      <div className="itemBox">
+        {users.map((user) => {
+          return <User user={user} key={user.id} />;
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default App;
